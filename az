@@ -22,3 +22,6 @@ az ad group list --filter "displayName eq 'VV_CLOUD_SRE'" --query "[].[displayNa
 
 # Remover todos os arquivos de um blob storage:
 az storage remove --account-key <Access_key> --account-name StorageAccountName --container-name '$web/sandbox' --recursive
+
+# Coletar informações de nome, versão, status e provisionamento de todos os clusters AKS de todas as subscriptions
+for sub in $(az account list | jq .[].id | tr -d '"'); do az aks list --subscription "$sub" --query "[?tags.sre == 'figital']" | jq -r '.[] | [ .name, .kubernetesVersion, .powerState.code, .provisioningState ] | @csv' | tr -d '"'; done
