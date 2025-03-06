@@ -1,0 +1,5 @@
+# Para trazer apenas o IP:
+dig +short <domain.name>
+
+# Para trazer apenas o campo ANSWER:
+dig +noall +answer <domain.name>
